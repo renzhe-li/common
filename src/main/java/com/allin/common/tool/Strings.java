@@ -9,6 +9,8 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.allin.common.constant.Constants;
+
 public final class Strings {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Strings.class);
@@ -106,7 +108,7 @@ public final class Strings {
 
 		if (object instanceof Date) {
 			LOG.info("object instanceof Date");
-			return DateUtils.toString((Date) object, DateUtils.DATE_FORMAT_PATTRN2);
+			return DateUtils.toString((Date) object, Constants.DATE_FORMAT_PATTRN2);
 		}
 
 		return String.valueOf(object);

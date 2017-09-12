@@ -7,6 +7,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.allin.common.constant.Constants;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -106,32 +107,32 @@ public final class JsonUtils {
 				}
 
 				try {
-					return DateUtils.toDate(json.getAsString(), DateUtils.DATE_FORMAT_PATTRN4);
+					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN4);
 				} catch (ParseException e) {
 					LOG.error("ParseException: For input string: {} with DateFormat : {}",
-							json.getAsString(), DateUtils.DATE_FORMAT_PATTRN4);
+							json.getAsString(), Constants.DATE_FORMAT_PATTRN4);
 				}
 
 				try {
-					return DateUtils.toDate(json.getAsString(), DateUtils.DATE_FORMAT_PATTRN3);
+					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN3);
 				} catch (ParseException e) {
 					LOG.error("ParseException: For input string: {} with DateFormat : {}",
-							json.getAsString(), DateUtils.DATE_FORMAT_PATTRN3);
+							json.getAsString(), Constants.DATE_FORMAT_PATTRN3);
 				}
 
 				try {
-					return DateUtils.toDate(json.getAsString(), DateUtils.DATE_FORMAT_PATTRN2);
+					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN2);
 				} catch (ParseException e) {
 					LOG.error("ParseException: For input string: {} with DateFormat : {}",
-							json.getAsString(), DateUtils.DATE_FORMAT_PATTRN2);
+							json.getAsString(), Constants.DATE_FORMAT_PATTRN2);
 				}
 
 				try {
 
-					return DateUtils.toDate(json.getAsString(), DateUtils.DATE_FORMAT_PATTRN1);
+					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN1);
 				} catch (ParseException e) {
 					LOG.error("ParseException: For input string: {} with DateFormat : {}",
-							json.getAsString(), DateUtils.DATE_FORMAT_PATTRN1);
+							json.getAsString(), Constants.DATE_FORMAT_PATTRN1);
 				}
 
 				return null;

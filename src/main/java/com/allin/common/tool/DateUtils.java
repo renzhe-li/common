@@ -15,18 +15,6 @@ public final class DateUtils {
 
 	private static final Locale DEFAULT_LOCALE = Locale.getDefault(Locale.Category.FORMAT);
 
-	/** yyyy-MM-hh */
-	public static final String DATE_FORMAT_PATTRN1 = "yyyy-MM-hh";
-
-	/** yyyy-MM-hh HH:mm:ss */
-	public static final String DATE_FORMAT_PATTRN2 = "yyyy-MM-hh HH:mm:ss";
-
-	/** yyyy-MM-hh HH:mm:ss.SSS */
-	public static final String DATE_FORMAT_PATTRN3 = "yyyy-MM-hh HH:mm:ss.SSS";
-
-	/** yyyy-MM-hh HH:mm:ss.SSSSSS */
-	public static final String DATE_FORMAT_PATTRN4 = "yyyy-MM-hh HH:mm:ss.SSSSSS";
-
 	private DateUtils() {
 	}
 
