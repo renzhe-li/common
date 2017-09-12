@@ -94,7 +94,7 @@ public final class JsonUtils {
 			}
 		};
 
-		/** convert Long to Date */
+		/** convert String to Date */
 		final JsonDeserializer<Date> dateDeserializer = new JsonDeserializer<Date>() {
 
 			public Date deserialize(final JsonElement json, final Type typeOfT,
