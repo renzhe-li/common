@@ -101,7 +101,7 @@ public final class Strings {
 	 * @param object
 	 * @return
 	 */
-	public static String fromObject(final Object object) {
+	public static String valueOf(final Object object) {
 		if (object == null) {
 			return null;
 		}
@@ -121,7 +121,7 @@ public final class Strings {
 	 * @param format
 	 * @return
 	 */
-	public static String fromObject(final Object object, final String format) {
+	public static String valueOf(final Object object, final String format) {
 		if (object == null) {
 			return null;
 		}
