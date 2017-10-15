@@ -1,5 +1,6 @@
 package com.allin.common.tool;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,21 +8,46 @@ import java.util.Optional;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author renzhe.li
+ *
+ */
 public final class XmlUtils {
+
+	private static final Logger LOG = LoggerFactory.getLogger(XmlUtils.class);
 
 	private XmlUtils() {
 	}
 
-	public static Map<String, Object> dom2Map(Document doc) {
+	public static Map<String, Object> dom2Map(final File file) {
+		final SAXReader reader = new SAXReader();
+		try {
+			final Document document = reader.read(file);
+			return dom2Map(document);
+		} catch (final DocumentException e) {
+			LOG.info("DocumentException occur when processing file:{}", file.getName());
+		}
+
+		return new HashMap<>();
+	}
+
+	public static Map<String, Object> dom2Map(final Document doc) {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		if (doc == null) {
 			return map;
 		}
 
 		final Element root = doc.getRootElement();
-		map.putAll(dom2Map(root));
+		final Map<String, Object> childMap = dom2Map(root);
+
+		map.put(root.getName(), childMap);
 
 		return map;
 	}
