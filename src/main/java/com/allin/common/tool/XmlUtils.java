@@ -15,6 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * XmlUtils is a utility to processing XML file to Map <br>
+ * <br>
+ * To Mapping the XML Data completely, the XML file should follow this rule:<br>
+ * <tab>if two or more nodes have the same name under the same node, the every
+ * node need to add a attribute:priority="value". And the node name will be the
+ * origin name append "{@value}"<br>
+ * <br>
  * 
  * @author renzhe.li
  *
