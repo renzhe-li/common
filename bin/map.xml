@@ -18,12 +18,25 @@
 		<username>root</username>
 		<password>***</password>
 	</mysql>
+	<mysql priority="3">
+		<driver>org.mariadb.jdbc.Driver</driver>
+		<url>jdbc:mariadb://localhost:3306/</url>
+		<username>root</username>
+		<password>***</password>
+	</mysql>
 	<unknown>
 		<oracle>
 			<driver>oracle.jdbc.driver.OracleDriver</driver>
 			<url>jdbc:oracle:thin:@127.0.0.1:1521:XE</url>
 			<username>tiger</username>
 			<password>***</password>
+			<query></query>
+			<argus>
+				<argu>1</argu>
+				<argu>3</argu>
+				<argu>4</argu>
+				<argu>6</argu>
+			</argus>
 		</oracle>
 	</unknown>
 </Databases>

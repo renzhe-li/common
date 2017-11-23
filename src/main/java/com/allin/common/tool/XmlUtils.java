@@ -1,10 +1,10 @@
 package com.allin.common.tool;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -19,9 +19,7 @@ import org.slf4j.LoggerFactory;
  * <br>
  * To Mapping the XML Data completely, the XML file should follow this rule:<br>
  * <tab>if two or more nodes have the same name under the same node, the every
- * node need to add a attribute:priority="value". And the node name will be the
- * origin name append "{@value}"<br>
- * <br>
+ * node need to add a attribute:priority="value". <br>
  * 
  * @author renzhe.li
  *
@@ -39,7 +37,7 @@ public final class XmlUtils {
 			final Document document = reader.read(file);
 			return dom2Map(document);
 		} catch (final DocumentException e) {
-			LOG.info("DocumentException occur when processing file:{}", file.getName());
+			LOG.info("DocumentException occur when processing file:{}", file.getName(), e);
 		}
 
 		return new HashMap<>();
@@ -68,7 +66,7 @@ public final class XmlUtils {
 			final List<Attribute> attributes = e.attributes();
 
 			if (elements.isEmpty() && attributes.isEmpty()) {
-				map.put(e.getName(), e.getText());
+				putParentMap(map, e.getName(), e.getText());
 				return;
 			}
 
@@ -77,23 +75,29 @@ public final class XmlUtils {
 				properties.putAll(dom2Map(e));
 			}
 
-			Optional<String> priority = Optional.ofNullable(null);
 			for (final Attribute attribute : attributes) {
-				final String name = attribute.getName();
-				if (name.equals("priority")) {
-					priority = Optional.ofNullable(attribute.getValue());
-				}
 				properties.put("@" + attribute.getName(), attribute.getValue());
 			}
 
-			if (priority.isPresent()) {
-				map.put(e.getName() + "@" + priority.get(), properties);
-			} else {
-				map.put(e.getName(), properties);
-			}
+			putParentMap(map, e.getName(), properties);
 		});
 
 		return map;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void putParentMap(final Map<String, Object> map, final String key, final Object value) {
+		final Object originalValue = map.getOrDefault(key, null);
+		if (originalValue == null) {
+			map.put(key, value);
+		} else if (originalValue instanceof List) {
+			ArrayList.class.cast(originalValue).add(value);
+		} else {
+			final List<Object> values = new ArrayList<>();
+			values.add(originalValue);
+			values.add(value);
+			map.put(key, values);
+		}
 	}
 
 }
