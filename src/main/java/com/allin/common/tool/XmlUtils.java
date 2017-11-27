@@ -1,10 +1,7 @@
 package com.allin.common.tool;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -14,12 +11,20 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.allin.common.dto.DataNode;
+
 /**
- * XmlUtils is a utility to processing XML file to Map <br>
+ * XmlUtils is a utility to processing XML file to {@code DataNode} <br>
  * <br>
- * To Mapping the XML Data completely, the XML file should follow this rule:<br>
- * <tab>if two or more nodes have the same name under the same node, the every
- * node need to add a attribute:priority="value". <br>
+ * Every XML Node has a {@code DataNode}:<br>
+ * <tab>1.XML Node Name => DataNode::name <br>
+ * <tab>2.if child Node is not exist, XML Node value => DataNode::value; else
+ * null<br>
+ * <tab>3.XML child nodes => DataNode::childNodes <br>
+ * <tab>4.the attribute is stored in DataNode::attributes, the key
+ * is @attributeName <br>
+ * <tab>5.the {@code Map} attributes also store the child node, but only node
+ * name and value.
  * 
  * @author renzhe.li
  *
@@ -31,73 +36,54 @@ public final class XmlUtils {
 	private XmlUtils() {
 	}
 
-	public static Map<String, Object> dom2Map(final File file) {
+	public static DataNode dom2DataNode(final File file) {
 		final SAXReader reader = new SAXReader();
 		try {
 			final Document document = reader.read(file);
-			return dom2Map(document);
+			return dom2DataNode(document);
 		} catch (final DocumentException e) {
-			LOG.info("DocumentException occur when processing file:{}", file.getName(), e);
+			LOG.error("DocumentException occur when processing file:{}", file.getName(), e);
 		}
 
-		return new HashMap<>();
+		return new DataNode();
 	}
 
-	public static Map<String, Object> dom2Map(final Document doc) {
-		final Map<String, Object> map = new HashMap<String, Object>();
+	public static DataNode dom2DataNode(final Document doc) {
 		if (doc == null) {
-			return map;
+			return new DataNode();
 		}
 
-		final Element root = doc.getRootElement();
-		final Map<String, Object> childMap = dom2Map(root);
-
-		map.put(root.getName(), childMap);
-
-		return map;
+		return getDataNodeFromElement(doc.getRootElement());
 	}
 
-	private static Map<String, Object> dom2Map(final Element root) {
-		final Map<String, Object> map = new HashMap<String, Object>();
+	private static DataNode getDataNodeFromElement(final Element element) {
+		final DataNode dataNode = new DataNode();
 
-		final List<Element> rootElements = root.elements();
-		rootElements.stream().forEach(e -> {
-			final List<Element> elements = e.elements();
-			final List<Attribute> attributes = e.attributes();
+		final List<Attribute> attributes = element.attributes();
+		attributes.stream()
+				.forEach(attribute -> dataNode.putAttribute("@" + attribute.getName(), attribute.getValue()));
+		LOG.debug("Success Putting {} Attributes to attributes Map for Node path:{}", attributes.size(),
+				element.getPath());
 
-			if (elements.isEmpty() && attributes.isEmpty()) {
-				putParentMap(map, e.getName(), e.getText());
-				return;
+		final List<Element> childElements = element.elements();
+		childElements.stream().forEach(childElement -> {
+			dataNode.putAttribute(childElement.getName(), null);
+			if (childElement.elements().isEmpty()) {
+				dataNode.putAttribute(childElement.getName(), childElement.getStringValue());
 			}
 
-			final Map<String, Object> properties = new HashMap<>();
-			if (!elements.isEmpty()) {
-				properties.putAll(dom2Map(e));
-			}
-
-			for (final Attribute attribute : attributes) {
-				properties.put("@" + attribute.getName(), attribute.getValue());
-			}
-
-			putParentMap(map, e.getName(), properties);
+			dataNode.addChildNode(getDataNodeFromElement(childElement));
 		});
+		LOG.debug("Success Adding {} DataNode to child Node List for Node path:{}", childElements.size(),
+				element.getPath());
 
-		return map;
-	}
-
-	@SuppressWarnings("unchecked")
-	private static void putParentMap(final Map<String, Object> map, final String key, final Object value) {
-		final Object originalValue = map.getOrDefault(key, null);
-		if (originalValue == null) {
-			map.put(key, value);
-		} else if (originalValue instanceof List) {
-			ArrayList.class.cast(originalValue).add(value);
-		} else {
-			final List<Object> values = new ArrayList<>();
-			values.add(originalValue);
-			values.add(value);
-			map.put(key, values);
+		dataNode.setName(element.getName());
+		if (childElements.isEmpty()) {
+			dataNode.setValue(element.getStringValue());
 		}
+		LOG.debug("Success Setting {} to DataNode::value for Node path:{}", dataNode.getValue(), element.getPath());
+
+		return dataNode;
 	}
 
 }
