@@ -27,7 +27,7 @@ public class DataNode {
 
 	public DataNode() {
 		value = Constants.EMPTY_STRING;
-		path = Constants.split;
+		path = Constants.DIRECTORY_SEPARATOR;
 		childNodes = new ArrayList<>();
 		attributes = new HashMap<>();
 	}

@@ -8,8 +8,11 @@ public final class Constants {
 	/** empty string */
 	public static final String EMPTY_STRING = "";
 
-	/** char "/" */
-	public static final String split = "/";
+	/** directory separator */
+	public static final String DIRECTORY_SEPARATOR = "/";
+
+	/** Delimiter */
+	public static final String DELIMETER = ";";
 
 	/** yyyy-MM-hh */
 	public static final String DATE_FORMAT_PATTRN1 = "yyyy-MM-hh";
