@@ -98,41 +98,44 @@ public final class JsonUtils {
 			@Override
 			public Date deserialize(final JsonElement json, final Type typeOfT,
 					final JsonDeserializationContext context) throws JsonParseException {
+				final String jsonStr = json.getAsString();
+
 				try {
 					return new Date(json.getAsJsonPrimitive().getAsLong());
 				} catch (NumberFormatException e) {
-					LOG.error("NumberFormatException: For input string: {}", json.getAsString());
+					LOG.error("NumberFormatException: For input string: {}", jsonStr);
 				}
 
 				try {
-					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN4);
+					return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN4);
 				} catch (ParseException e) {
-					LOG.error("ParseException: For input string: {} with DateFormat : {}", json.getAsString(),
+					LOG.error("ParseException: For input string: {} with DateFormat : {}", jsonStr,
 							Constants.DATE_FORMAT_PATTRN4);
 				}
 
 				try {
-					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN3);
+					return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN3);
 				} catch (ParseException e) {
-					LOG.error("ParseException: For input string: {} with DateFormat : {}", json.getAsString(),
+					LOG.error("ParseException: For input string: {} with DateFormat : {}", jsonStr,
 							Constants.DATE_FORMAT_PATTRN3);
 				}
 
 				try {
-					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN2);
+					return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN2);
 				} catch (ParseException e) {
-					LOG.error("ParseException: For input string: {} with DateFormat : {}", json.getAsString(),
+					LOG.error("ParseException: For input string: {} with DateFormat : {}", jsonStr,
 							Constants.DATE_FORMAT_PATTRN2);
 				}
 
 				try {
 
-					return DateUtils.toDate(json.getAsString(), Constants.DATE_FORMAT_PATTRN1);
+					return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN1);
 				} catch (ParseException e) {
-					LOG.error("ParseException: For input string: {} with DateFormat : {}", json.getAsString(),
+					LOG.error("ParseException: For input string: {} with DateFormat : {}", jsonStr,
 							Constants.DATE_FORMAT_PATTRN1);
 				}
-				return null;
+
+				throw new JsonParseException("Failing parsing to Date, string:" + jsonStr);
 			}
 		};
 		builder.registerTypeAdapter(Date.class, dateSerializer).registerTypeAdapter(Date.class, dateDeserializer)

@@ -20,7 +20,6 @@ public class XmlUtilsTest {
 		long beginTime = System.currentTimeMillis();
 
 		final DataNode dataNode = XmlUtils.dom2DataNode(new File("src/test/resources/map.xml"));
-
 		final List<DataNode> dataNodes = dataNode.getChildNodes();
 
 		System.out.println(dataNodes.get(0));

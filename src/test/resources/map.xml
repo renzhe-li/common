@@ -13,7 +13,8 @@
 		<password>***</password>
 	</mysql>
 	<mysql priority="2">
-		<driver>org.mariadb.jdbc.Driver</driver>
+		<driver>org.mariadb.jdbc.Driver
+		</driver>
 		<url>jdbc:mariadb://localhost:3306/</url>
 		<username>root</username>
 		<password>***</password>

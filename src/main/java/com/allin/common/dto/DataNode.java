@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.allin.common.constant.Constants;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,11 +21,13 @@ import lombok.ToString;
 public class DataNode {
 	private String name;// Node::name
 	private String value;// Node::value
+	private String path;
 	private List<DataNode> childNodes;// Child Node list
-	private Map<String, String> attributes;// Node::[{@attributeName=value},{nodeName=value}]
+	private Map<String, String> attributes;// Node::{@attributeName=value}
 
 	public DataNode() {
-		value = null;
+		value = Constants.EMPTY_STRING;
+		path = Constants.split;
 		childNodes = new ArrayList<>();
 		attributes = new HashMap<>();
 	}

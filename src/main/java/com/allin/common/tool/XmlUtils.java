@@ -11,6 +11,7 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.allin.common.constant.Constants;
 import com.allin.common.dto.DataNode;
 
 /**
@@ -23,8 +24,6 @@ import com.allin.common.dto.DataNode;
  * <tab>3.XML child nodes => DataNode::childNodes <br>
  * <tab>4.the attribute is stored in DataNode::attributes, the key
  * is @attributeName <br>
- * <tab>5.the {@code Map} attributes also store the child node, but only node
- * name and value.
  * 
  * @author renzhe.li
  *
@@ -62,26 +61,20 @@ public final class XmlUtils {
 		final List<Attribute> attributes = element.attributes();
 		attributes.stream()
 				.forEach(attribute -> dataNode.putAttribute("@" + attribute.getName(), attribute.getValue()));
-		LOG.debug("Success Putting {} Attributes to attributes Map for Node path:{}", attributes.size(),
-				element.getPath());
 
 		final List<Element> childElements = element.elements();
 		childElements.stream().forEach(childElement -> {
-			dataNode.putAttribute(childElement.getName(), null);
-			if (childElement.elements().isEmpty()) {
-				dataNode.putAttribute(childElement.getName(), childElement.getStringValue());
-			}
-
 			dataNode.addChildNode(getDataNodeFromElement(childElement));
 		});
-		LOG.debug("Success Adding {} DataNode to child Node List for Node path:{}", childElements.size(),
-				element.getPath());
 
 		dataNode.setName(element.getName());
 		if (childElements.isEmpty()) {
-			dataNode.setValue(element.getStringValue());
+			dataNode.setValue(
+					element.getStringValue() == null ? Constants.EMPTY_STRING : element.getStringValue().trim());
 		}
-		LOG.debug("Success Setting {} to DataNode::value for Node path:{}", dataNode.getValue(), element.getPath());
+		dataNode.setPath(element.getPath());
+		LOG.debug("Current Node, name:{}, value:{}, path:{}", dataNode.getName(), dataNode.getValue(),
+				element.getPath());
 
 		return dataNode;
 	}

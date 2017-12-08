@@ -5,6 +5,12 @@ public final class Constants {
 	private Constants() {
 	}
 
+	/** empty string */
+	public static final String EMPTY_STRING = "";
+
+	/** char "/" */
+	public static final String split = "/";
+
 	/** yyyy-MM-hh */
 	public static final String DATE_FORMAT_PATTRN1 = "yyyy-MM-hh";
 
