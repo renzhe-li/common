@@ -67,14 +67,18 @@ public final class XmlUtils {
 			dataNode.addChildNode(getDataNodeFromElement(childElement));
 		});
 
+		dataNode.setPath(element.getPath());
 		dataNode.setName(element.getName());
 		if (childElements.isEmpty()) {
 			dataNode.setValue(
 					element.getStringValue() == null ? Constants.EMPTY_STRING : element.getStringValue().trim());
 		}
-		dataNode.setPath(element.getPath());
-		LOG.debug("Current Node, name:{}, value:{}, path:{}", dataNode.getName(), dataNode.getValue(),
-				element.getPath());
+		if (dataNode.containsAttribute("@priority")) {
+			dataNode.setPriority(dataNode.getAttribute("@priority"));
+		}
+
+		LOG.debug("Node path:{}, name:{}, value:{}, @priority:{}", element.getPath(), dataNode.getName(),
+				dataNode.getValue(), dataNode.getPriority());
 
 		return dataNode;
 	}
