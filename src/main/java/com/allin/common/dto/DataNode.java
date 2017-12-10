@@ -27,7 +27,7 @@ public class DataNode {
 	private String path;// Node::path
 	private String priority;// Node::@priority
 	private List<DataNode> childNodes;// Child Node list
-	private Map<String, String> attributes;// Node::{@attributeName=value}
+	private Map<String, String> attributes; // attributeName=value
 
 	public DataNode() {
 		value = Constants.EMPTY_STRING;

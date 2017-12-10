@@ -59,13 +59,10 @@ public final class XmlUtils {
 		final DataNode dataNode = new DataNode();
 
 		final List<Attribute> attributes = element.attributes();
-		attributes.stream()
-				.forEach(attribute -> dataNode.putAttribute("@" + attribute.getName(), attribute.getValue()));
+		attributes.stream().forEach(attribute -> dataNode.putAttribute(attribute.getName(), attribute.getValue()));
 
 		final List<Element> childElements = element.elements();
-		childElements.stream().forEach(childElement -> {
-			dataNode.addChildNode(getDataNodeFromElement(childElement));
-		});
+		childElements.stream().forEach(childElement -> dataNode.addChildNode(getDataNodeFromElement(childElement)));
 
 		dataNode.setPath(element.getPath());
 		dataNode.setName(element.getName());
@@ -73,11 +70,11 @@ public final class XmlUtils {
 			dataNode.setValue(
 					element.getStringValue() == null ? Constants.EMPTY_STRING : element.getStringValue().trim());
 		}
-		if (dataNode.containsAttribute("@priority")) {
-			dataNode.setPriority(dataNode.getAttribute("@priority"));
+		if (dataNode.containsAttribute("priority")) {
+			dataNode.setPriority(dataNode.getAttribute("priority"));
 		}
 
-		LOG.debug("Node path:{}, name:{}, value:{}, @priority:{}", element.getPath(), dataNode.getName(),
+		LOG.debug("Node path:{}, name:{}, value:{}, priority:{}", element.getPath(), dataNode.getName(),
 				dataNode.getValue(), dataNode.getPriority());
 
 		return dataNode;

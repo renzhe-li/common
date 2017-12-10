@@ -8,6 +8,7 @@ import java.util.Arrays;
  * https://github.com/frankiegao123/mask-utils
  * 
  * @author frankiegao123
+ * 
  */
 public final class Mask {
 
@@ -22,6 +23,8 @@ public final class Mask {
 	public static final char[] MASK_100 = new char[100];
 
 	public static final char[] EMPTY_CHARS = new char[0];
+
+	public static final String EMPTY_STRING = "";
 
 	static {
 		Arrays.fill(MASK_3, MASK_CHAR);
@@ -56,7 +59,7 @@ public final class Mask {
 
 	public static char[] maskToChars(String str, int before, int after) {
 		if (str == null) {
-			return null;
+			return EMPTY_CHARS;
 		}
 		char[] chs = str.toCharArray();
 		if (chs.length == 0 || chs.length <= before + after) {
@@ -68,7 +71,7 @@ public final class Mask {
 
 	public static char[] maskToChars(String str, int before, int after, int maskCount) {
 		if (str == null) {
-			return null;
+			return EMPTY_CHARS;
 		}
 		if (maskCount <= 0) {
 			return maskToChars(str, before, after);
@@ -89,7 +92,7 @@ public final class Mask {
 
 	private static String toString(char[] chs) {
 		if (chs == null) {
-			return null;
+			return EMPTY_STRING;
 		}
 		return new String(chs);
 	}
