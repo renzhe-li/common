@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * 掩码工具类
  *
- * {@link https://github.com/frankiegao123/mask-utils}
+ * https://github.com/frankiegao123/mask-utils
  * 
  * @author frankiegao123
  */
