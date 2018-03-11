@@ -4,10 +4,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * 
@@ -15,34 +16,73 @@ import org.slf4j.LoggerFactory;
  *
  */
 public final class DateUtils {
+	public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+	public static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone("Asia/Shanghai");
+	private static ThreadLocal<Map<Pair<String, TimeZone>, DateFormat>> formatters = ThreadLocal
+			.withInitial(HashMap::new);
 
-	private static final Logger LOG = LoggerFactory.getLogger(DateUtils.class);
+	/**
+	 * 
+	 * @param date
+	 * @param pattern
+	 * @return
+	 */
+	public static String toString(final Date date, final String pattern) {
+		return getDateFormat(pattern, DEFAULT_TIME_ZONE).format(date);
+	}
 
-	private static final Locale DEFAULT_LOCALE = Locale.getDefault(Locale.Category.FORMAT);
+	/**
+	 * 
+	 * @param date
+	 * @param pattern
+	 * @param zone
+	 * @return
+	 */
+	public static String toString(final Date date, final String pattern, final TimeZone zone) {
+		return getDateFormat(pattern, zone).format(date);
+	}
+
+	/**
+	 * 
+	 * @param dateStr
+	 * @param pattern
+	 * @param zone
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date toDate(final String dateStr, final String pattern) throws ParseException {
+		return getDateFormat(pattern, DEFAULT_TIME_ZONE).parse(dateStr);
+	}
+
+	/**
+	 * 
+	 * @param dateStr
+	 * @param pattern
+	 * @param zone
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date toDate(final String dateStr, final String pattern, final TimeZone zone) throws ParseException {
+		return getDateFormat(pattern, zone).parse(dateStr);
+	}
+
+	public static DateFormat getDateFormat(final String pattern, final TimeZone zone) {
+		final String validPattern = pattern == null ? YYYY_MM_DD_HH_MM_SS : pattern;
+		final TimeZone validTimeZone = zone == null ? DEFAULT_TIME_ZONE : zone;
+
+		DateFormat format = formatters.get().get(Pair.of(validPattern, validTimeZone));
+
+		if (format == null) {
+			format = new SimpleDateFormat(validPattern);
+			format.setTimeZone(validTimeZone);
+
+			formatters.get().put(Pair.of(validPattern, validTimeZone), format);
+		}
+
+		return format;
+	}
 
 	private DateUtils() {
-	}
-
-	public static String toString(final Date date, final String pattern) {
-		LOG.info("Converting Date:{} to String with Pattern:{}, Local:{}", date, pattern, DEFAULT_LOCALE);
-		return toString(date, pattern, DEFAULT_LOCALE);
-	}
-
-	public static String toString(final Date date, final String pattern, final Locale locale) {
-		LOG.info("Converting Date:{} to String with Pattern:{}, Local:{}", date, pattern, locale);
-		final DateFormat dateFormat = new SimpleDateFormat(pattern, locale);
-		return dateFormat.format(date);
-	}
-
-	public static Date toDate(final String dateValue, final String pattern) throws ParseException {
-		LOG.info("Converting String:{} to Date with Pattern:{}, Local:{}", dateValue, pattern, DEFAULT_LOCALE);
-		return toDate(dateValue, pattern, DEFAULT_LOCALE);
-	}
-
-	public static Date toDate(final String dateValue, final String pattern, final Locale locale) throws ParseException {
-		LOG.info("Converting String:{} to Date with Pattern:{}, Local:{}", dateValue, pattern, locale);
-		final DateFormat dateFormat = new SimpleDateFormat(pattern, locale);
-		return dateFormat.parse(dateValue);
 	}
 
 }
