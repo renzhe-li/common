@@ -1,4 +1,4 @@
-package com.allin.common.dto;
+package com.rzhegroups.common.dto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.allin.common.constant.Constants;
+import com.rzhegroups.common.constant.Constants;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

@@ -1,4 +1,4 @@
-package com.allin.common.tool;
+package com.rzhegroups.common.tool;
 
 import java.io.File;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.allin.common.constant.Constants;
-import com.allin.common.dto.DataNode;
+import com.rzhegroups.common.constant.Constants;
+import com.rzhegroups.common.dto.DataNode;
 
 /**
  * XmlUtils is a utility to processing XML file to {@code DataNode} <br>
@@ -73,9 +73,6 @@ public final class XmlUtils {
 		if (dataNode.containsAttribute("priority")) {
 			dataNode.setPriority(dataNode.getAttribute("priority"));
 		}
-
-		LOG.debug("Node path:{}, name:{}, value:{}, priority:{}", element.getPath(), dataNode.getName(),
-				dataNode.getValue(), dataNode.getPriority());
 
 		return dataNode;
 	}

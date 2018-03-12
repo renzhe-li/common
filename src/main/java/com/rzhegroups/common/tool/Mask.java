@@ -1,4 +1,4 @@
-package com.allin.common.tool;
+package com.rzhegroups.common.tool;
 
 import java.util.Arrays;
 

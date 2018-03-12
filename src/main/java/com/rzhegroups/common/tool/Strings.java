@@ -1,4 +1,4 @@
-package com.allin.common.tool;
+package com.rzhegroups.common.tool;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.allin.common.constant.Constants;
+import com.rzhegroups.common.constant.Constants;
 
 public final class Strings {
 
@@ -108,7 +108,7 @@ public final class Strings {
 
 		if (object instanceof Date) {
 			LOG.info("object instanceof Date");
-			return DateUtils.toString((Date) object, Constants.DATE_FORMAT_PATTRN2);
+			return DateUtils.toString((Date) object, Constants.YYYY_MM_HH_HH_MM_SS);
 		}
 
 		return String.valueOf(object);

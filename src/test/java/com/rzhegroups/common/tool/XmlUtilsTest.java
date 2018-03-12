@@ -1,4 +1,4 @@
-package com.allin.common.tool;
+package com.rzhegroups.common.tool;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import com.allin.common.dto.DataNode;
+import com.rzhegroups.common.dto.DataNode;
+import com.rzhegroups.common.tool.XmlUtils;
 
 public class XmlUtilsTest {
 

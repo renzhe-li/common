@@ -1,11 +1,10 @@
-package com.allin.common.tool;
+package com.rzhegroups.common.tool;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 
-import com.allin.common.constant.Constants;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +13,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
+import com.rzhegroups.common.constant.Constants;
 
 public final class JsonUtils {
 	private static final GsonBuilder gsonBuilder = getGsonBuilder();
@@ -102,23 +102,23 @@ public final class JsonUtils {
 		}
 
 		try {
-			return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN4);
+			return DateUtils.toDate(jsonStr, Constants.YYYY_MM_HH_HH_MM_SS_SSSSSS);
 		} catch (ParseException e) {
 		}
 
 		try {
-			return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN3);
+			return DateUtils.toDate(jsonStr, Constants.YYYY_MM_HH_HH_MM_SS_SSS);
 		} catch (ParseException e) {
 		}
 
 		try {
-			return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN2);
+			return DateUtils.toDate(jsonStr, Constants.YYYY_MM_HH_HH_MM_SS);
 		} catch (ParseException e) {
 		}
 
 		try {
 
-			return DateUtils.toDate(jsonStr, Constants.DATE_FORMAT_PATTRN1);
+			return DateUtils.toDate(jsonStr, Constants.YYYY_MM_HH);
 		} catch (ParseException e) {
 		}
 

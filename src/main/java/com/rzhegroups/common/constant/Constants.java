@@ -1,4 +1,4 @@
-package com.allin.common.constant;
+package com.rzhegroups.common.constant;
 
 public final class Constants {
 
@@ -15,15 +15,15 @@ public final class Constants {
 	public static final String DELIMETER = ";";
 
 	/** yyyy-MM-hh */
-	public static final String DATE_FORMAT_PATTRN1 = "yyyy-MM-hh";
+	public static final String YYYY_MM_HH = "yyyy-MM-hh";
 
 	/** yyyy-MM-hh HH:mm:ss */
-	public static final String DATE_FORMAT_PATTRN2 = "yyyy-MM-hh HH:mm:ss";
+	public static final String YYYY_MM_HH_HH_MM_SS = "yyyy-MM-hh HH:mm:ss";
 
 	/** yyyy-MM-hh HH:mm:ss.SSS */
-	public static final String DATE_FORMAT_PATTRN3 = "yyyy-MM-hh HH:mm:ss.SSS";
+	public static final String YYYY_MM_HH_HH_MM_SS_SSS = "yyyy-MM-hh HH:mm:ss.SSS";
 
 	/** yyyy-MM-hh HH:mm:ss.SSSSSS */
-	public static final String DATE_FORMAT_PATTRN4 = "yyyy-MM-hh HH:mm:ss.SSSSSS";
+	public static final String YYYY_MM_HH_HH_MM_SS_SSSSSS = "yyyy-MM-hh HH:mm:ss.SSSSSS";
 
 }
